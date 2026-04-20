@@ -487,25 +487,128 @@ class UIManager {
    * @param {object} result - Result object with isCorrect and details
    */
   showResult(result) {
-    // Trigger confetti if correct
+    const resultScreen = document.getElementById('result-screen');
+    
+    // Set screen state class for background styling
+    resultScreen.classList.remove('success-state', 'failure-state');
+    resultScreen.classList.add(result.isCorrect ? 'success-state' : 'failure-state');
+    
+    // Trigger confetti and particles if correct
     if (result.isCorrect) {
       setTimeout(() => this.triggerConfetti(), 300);
+      setTimeout(() => this.triggerParticles(), 500);
     }
-
+    
+    // Update achievement badge
+    const badgeIcon = document.getElementById('badge-icon');
+    const achievementBadge = document.getElementById('achievement-badge');
+    if (result.isCorrect) {
+      badgeIcon.textContent = '🏆';
+      achievementBadge.style.display = 'flex';
+    } else {
+      badgeIcon.textContent = '💪';
+      achievementBadge.style.display = 'flex';
+    }
+    
+    // Animate stars (show 3 stars for success, 0 for failure)
+    this.animateStars(result.isCorrect ? 3 : 0);
+    
+    // Update result title
+    const resultTitle = document.getElementById('result-title');
+    resultTitle.textContent = result.isCorrect ? 'Congratulations!' : 'Game Complete!';
+    
     // Update result message
     const resultIcon = document.getElementById('result-icon');
     const resultText = document.getElementById('result-text');
+    const resultSubtitle = document.getElementById('result-subtitle');
     const detailsMessage = document.getElementById('details-message');
     
     if (result.isCorrect) {
       resultIcon.textContent = '🎉';
-      resultText.textContent = 'Correct!';
-      detailsMessage.textContent = 'All ingredients are in the right containers!';
+      resultText.textContent = 'Perfect Match!';
+      resultSubtitle.textContent = 'You successfully matched all ingredients to their containers!';
+      detailsMessage.style.display = 'none';
     } else {
       resultIcon.textContent = '❌';
-      resultText.textContent = 'Try Again!';
+      resultText.textContent = 'Not Quite Right';
+      resultSubtitle.textContent = 'Some ingredients are in the wrong containers. Try again!';
       detailsMessage.textContent = result.details;
+      detailsMessage.style.display = 'block';
     }
+    
+    // Update stats (placeholder values - can be enhanced with actual game data)
+    this.updateStats(result.isCorrect);
+  }
+  
+  /**
+   * Animate stars appearing with delay
+   * @param {number} count - Number of stars to activate
+   */
+  animateStars(count) {
+    const stars = document.querySelectorAll('.star');
+    stars.forEach((star, index) => {
+      star.classList.remove('active');
+      if (index < count) {
+        setTimeout(() => {
+          star.classList.add('active');
+        }, 400 + (index * 200));
+      }
+    });
+  }
+  
+  /**
+   * Update statistics display
+   * @param {boolean} isCorrect - Whether the answer was correct
+   */
+  updateStats(isCorrect) {
+    // These would ideally come from actual game state
+    // For now, showing placeholder values
+    const accuracyStat = document.getElementById('accuracy-stat');
+    const timeStat = document.getElementById('time-stat');
+    const hintsStat = document.getElementById('hints-stat');
+    
+    if (isCorrect) {
+      accuracyStat.textContent = '100%';
+      timeStat.textContent = '1:23'; // Placeholder - would track actual time
+      hintsStat.textContent = document.getElementById('hints-left').textContent;
+    } else {
+      accuracyStat.textContent = '65%'; // Placeholder
+      timeStat.textContent = '2:15'; // Placeholder
+      hintsStat.textContent = document.getElementById('hints-left').textContent;
+    }
+  }
+  
+  /**
+   * Trigger floating particles animation
+   */
+  triggerParticles() {
+    const container = document.getElementById('particles-container');
+    if (!container) return;
+    
+    container.innerHTML = '';
+    
+    // Create 30 floating particles
+    const colors = ['#FFD700', '#FFA500', '#4CAF50', '#1E3A8A', '#FFFFFF'];
+    
+    for (let i = 0; i < 30; i++) {
+      const particle = document.createElement('div');
+      particle.className = 'particle';
+      
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.bottom = '0';
+      particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      particle.style.animationDuration = (Math.random() * 2 + 2) + 's';
+      particle.style.animationDelay = Math.random() * 1.5 + 's';
+      particle.style.width = (Math.random() * 8 + 4) + 'px';
+      particle.style.height = particle.style.width;
+      
+      container.appendChild(particle);
+    }
+    
+    // Clean up particles after animation
+    setTimeout(() => {
+      container.innerHTML = '';
+    }, 4000);
   }
 
   /**
