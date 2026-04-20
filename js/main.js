@@ -74,6 +74,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize drag and drop
     gameEngine.initDragAndDrop();
   });
+  
+  // Home button
+  document.getElementById('home-btn').addEventListener('click', () => {
+    // Switch to home screen
+    uiManager.showScreen('home-screen');
+  });
 
   // Re-initialize drag and drop when ingredients are added/removed
   // NOT NEEDED - event delegation handles dynamic elements automatically
