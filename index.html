@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAN Smart Mix</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Home Screen -->
+    <div id="home-screen" class="screen active">
+        <div class="background-bubbles">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+        
+        <div class="home-content">
+            <h1 class="game-title">NAN Smart Mix</h1>
+            <p class="game-subtitle">Match the ingredients to the correct containers!</p>
+            <button id="play-btn" class="btn btn-primary">Play</button>
+            <button id="instructions-btn" class="btn btn-secondary">Instructions</button>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <button id="hint-btn" class="btn btn-hint">
+                Hint (<span id="hints-left">3</span>)
+            </button>
+        </div>
+
+        <div class="containers-area" id="containers-area">
+            <!-- Containers will be rendered here -->
+        </div>
+
+        <div class="ingredients-area">
+            <h3 class="ingredients-title">Drag Ingredients Below</h3>
+            <div id="ingredients-area" class="ingredients-grid">
+                <!-- Ingredients will be rendered here -->
+            </div>
+        </div>
+
+        <div class="finalize-area">
+            <button id="check-answers-btn" class="btn btn-primary btn-check" disabled>Check Answers</button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen" class="screen">
+        <div id="confetti-container"></div>
+        <div class="result-content">
+            <h2 class="result-title">Game Complete!</h2>
+            <div id="result-message" class="result-message">
+                <span id="result-icon" class="result-icon"></span>
+                <span id="result-text" class="result-text"></span>
+            </div>
+            <div id="details-message" class="details-message"></div>
+            <button id="play-again-btn" class="btn btn-primary">Play Again</button>
+        </div>
+    </div>
+
+    <!-- Instructions Modal -->
+    <div id="instructions-modal" class="modal">
+        <div class="modal-content">
+            <span id="close-modal" class="close-btn">&times;</span>
+            <h2 class="modal-title">How to Play</h2>
+            <p class="modal-text">
+                Drag the correct ingredients into the correct NAN container. 
+                Complete the product to earn points!
+            </p>
+            <ul class="modal-rules">
+                <li>🎯 Drag ingredients to the correct containers</li>
+                <li>↩️ Drag ingredients back to remove them</li>
+                <li>✅ Click "Check Answers" when you're ready</li>
+                <li>You have <strong>3 hints</strong> available</li>
+            </ul>
+            <button id="close-modal-btn" class="btn btn-primary">Got it!</button>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="js/config.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
